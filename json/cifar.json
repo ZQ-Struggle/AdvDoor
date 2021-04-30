@@ -9,7 +9,7 @@
   "backdoor_type": "adversarial",
   "pert_path": "../perturbation/cifar_universal_5to6_20210430-103830.pkl",
   "result_path": "../log/20191103/mnist_train_poison_rate_20191104.pkl",
-  "train_epoch": 20,
+  "train_epoch": 10,
   "save_interval": 5,
   "num_selection": 50000,
   "train_poison_rate": 0.3,

@@ -38,7 +38,7 @@ def test_deserialize_model(param, args):
         data_clean.load_data(is_add_channel=True)
         model.init(data_clean)
         model.init_model()
-        model.train(data_clean, nb_epochs=10)
+        model.train(data_clean, nb_epochs=180)
         serialize_name = '_'.join(
         [param.get_conf('model_prefix'), 'clean', get_date()]) + '.pkl'
         print('serialize_name = ', serialize_name)
@@ -141,7 +141,7 @@ def gen_rand_perturbation(param, args):
         model = model(param)
         model.init(data)
         model.init_model()
-        model.train(data, nb_epochs=10)
+        model.train(data, nb_epochs=180)
         serialize_name = '_'.join(
             [param.get_conf('model_prefix'), get_date()]) + '_clean.pkl'
         print('serialize_name = ', serialize_name)

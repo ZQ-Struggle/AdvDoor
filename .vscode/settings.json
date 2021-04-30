@@ -1,0 +1,4 @@
+{
+    "python.formatting.provider": "yapf",
+    "python.pythonPath": "/home/zzzzzq/.conda/envs/keras35/bin/python"
+}

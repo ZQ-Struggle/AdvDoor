@@ -119,7 +119,7 @@ class ActivationClustering:
         fp = jsonObject[label]['FalsePositive']['numerator']
 
         if tp + fp == 0 or tp + fn == 0:
-            print('divide by zero')
+            print('escape the detection')
             return
 
         precision = float(tp) / (tp + fp)

@@ -38,23 +38,18 @@ def test_deserialize_model(param, args):
         data_clean.load_data(is_add_channel=True)
         model.init(data_clean)
         model.init_model()
-        model.train(data_clean, nb_epochs=80)
+        model.train(data_clean, nb_epochs=180)
         serialize_name = '_'.join(
-        [param.get_conf('model_prefix'), 'clean', get_date()]) + '.pkl'
+        [param.get_conf('model_prefix'), get_date(), 'clean']) + '.pkl'
+        serialize_path = os.path.join(param.get_conf('save_dir'), serialize_name)
         print('serialize_name = ', serialize_name)
-        with open(serialize_name,'wb') as f:
+        with open(serialize_path,'wb') as f:
             pickle.dump(model,f)
         param.set_conf('model_path_finetune', serialize_name)
     
     data = Data(param)
     data.load_data()
     data.gen_backdoor(model)
-    # if args.vis:
-
-    #     poison_idx = np.where(np.array(data.is_poison_test) == 1)[0]
-    #     for i in range(4,7):
-    #         data.visiualize_img_by_idx(poison_idx[i], 0, is_train=False)
-    model.predict(data)
     model.train(data)
     
     
@@ -72,7 +67,8 @@ def test_deserialize_model(param, args):
 
     model2.predict(data)
     ac = ActivationClustering(data, param, model2)
-    ac.relative_size_metric()
+    ac.size_metric()
+    # ac.relative_size_metric()
 
 
 
@@ -100,8 +96,8 @@ def test_resume_model(param, args):
         compute_corr(model.param, model, data)
     else:
         ac = ActivationClustering(data, model.param, model)
-        # ac.size_metric()
-        ac.relative_size_metric()
+        ac.size_metric()
+        # ac.relative_size_metric()
 
 def gen_perturbation(model, data, method, param):
 
@@ -146,7 +142,7 @@ def gen_rand_perturbation(param, args):
         model = model(param)
         model.init(data)
         model.init_model()
-        model.train(data, nb_epochs=80)
+        model.train(data, nb_epochs=180)
         serialize_name = '_'.join(
             [param.get_conf('model_prefix'), get_date()]) + '_clean.pkl'
         print('serialize_name = ', serialize_name)

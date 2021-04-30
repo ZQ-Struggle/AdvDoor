@@ -12,5 +12,5 @@ src/__pycache__/*
 vis/*
 clustering_result/*
 *.h5
-
+.vscode/*
 

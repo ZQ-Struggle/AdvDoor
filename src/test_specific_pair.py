@@ -40,16 +40,16 @@ def test_deserialize_model(param, args):
         model.init_model()
         model.train(data_clean, nb_epochs=180)
         serialize_name = '_'.join(
-        [param.get_conf('model_prefix'), 'clean', get_date()]) + '.pkl'
+        [param.get_conf('model_prefix'), get_date(), 'clean']) + '.pkl'
+        serialize_path = os.path.join(param.get_conf('save_dir'), serialize_name)
         print('serialize_name = ', serialize_name)
-        with open(serialize_name,'wb') as f:
+        with open(serialize_path,'wb') as f:
             pickle.dump(model,f)
         param.set_conf('model_path_finetune', serialize_name)
     
     data = Data(param)
     data.load_data()
     data.gen_backdoor(model)
-
     model.train(data)
     
     
@@ -67,7 +67,8 @@ def test_deserialize_model(param, args):
 
     model2.predict(data)
     ac = ActivationClustering(data, param, model2)
-    ac.relative_size_metric()
+    ac.size_metric()
+    # ac.relative_size_metric()
 
 
 
@@ -95,8 +96,8 @@ def test_resume_model(param, args):
         compute_corr(model.param, model, data)
     else:
         ac = ActivationClustering(data, model.param, model)
-        # ac.size_metric()
-        ac.relative_size_metric()
+        ac.size_metric()
+        # ac.relative_size_metric()
 
 def gen_perturbation(model, data, method, param):
 

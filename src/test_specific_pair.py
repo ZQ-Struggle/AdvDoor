@@ -38,7 +38,7 @@ def test_deserialize_model(param, args):
         data_clean.load_data(is_add_channel=True)
         model.init(data_clean)
         model.init_model()
-        model.train(data_clean, nb_epochs=80)
+        model.train(data_clean, nb_epochs=10)
         serialize_name = '_'.join(
         [param.get_conf('model_prefix'), 'clean', get_date()]) + '.pkl'
         print('serialize_name = ', serialize_name)
@@ -49,12 +49,7 @@ def test_deserialize_model(param, args):
     data = Data(param)
     data.load_data()
     data.gen_backdoor(model)
-    # if args.vis:
 
-    #     poison_idx = np.where(np.array(data.is_poison_test) == 1)[0]
-    #     for i in range(4,7):
-    #         data.visiualize_img_by_idx(poison_idx[i], 0, is_train=False)
-    model.predict(data)
     model.train(data)
     
     
@@ -146,7 +141,7 @@ def gen_rand_perturbation(param, args):
         model = model(param)
         model.init(data)
         model.init_model()
-        model.train(data, nb_epochs=80)
+        model.train(data, nb_epochs=10)
         serialize_name = '_'.join(
             [param.get_conf('model_prefix'), get_date()]) + '_clean.pkl'
         print('serialize_name = ', serialize_name)

@@ -7,7 +7,7 @@
     "method": "universal",
     "model_prefix": "cifar",
     "backdoor_type": "adversarial",
-    "pert_path": "../perturbation/cifar_universal_5to6_20210430-103830.pkl",
+    "pert_path": "../perturbation/cifar_universal_5to6_20210430-142209.pkl",
     "result_path": "../log/20191103/mnist_train_poison_rate_20191104.pkl",
     "train_epoch": 20,
     "save_interval": 5,
@@ -21,8 +21,8 @@
     "num_classes": 10,
     "batch_size": 128,
     "train_image_size": 32,
-    "model_path": "../model/cifar_clean_20210430-155414.pkl",
+    "model_path": "../model/cifar_clean_20210430-145041.pkl",
     "model_path_backdoor": "../model/cifar_20210427-181241_poison_5to6.pkl",
-    "model_path_finetune": "../model/cifar_20210430-153043_clean.pkl",
+    "model_path_finetune": "../model/cifar_20210430-141935_clean.pkl",
     "num_gpu": 1
 }

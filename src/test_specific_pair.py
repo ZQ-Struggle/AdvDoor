@@ -1,5 +1,6 @@
 
 import os
+os.environ["CUDA_VISIBLE_DEVICES"] = "-1" 
 os.environ['KERAS_BACKEND'] = 'tensorflow'
 from keras.layers import serialize
 from attacks.universal_perturbation import Universal_perturbation
@@ -14,7 +15,7 @@ from visualization import *
 import numpy as np
 import glob
 import argparse
-
+import cv2.imread
 
 def test_deserialize_model(param, args):
     # the json configuration can be accessed by model.param

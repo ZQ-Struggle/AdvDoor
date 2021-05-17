@@ -5,6 +5,7 @@ import numpy as np
 from utils import *
 import copy
 
+
 class Backdoor:
     def __init__(self, conf):
         self.train_poison_rate = conf['train_poison_rate']
@@ -90,6 +91,8 @@ class Backdoor:
         if isinstance(x_clean[0], str):
             x_poison = x_clean
             imgs_p = [x_clean[i] for i in self.poison.get_indices_to_be_poisoned()]
+            inds_save = np.setdiff1d(np.arange(len(x_clean)), self.poison.get_indices_to_be_poisoned())
+            x_poison = x_poison[inds_save]
             for f in imgs_p:
                 # BGR->RGB
                 img = cv2.imread(os.path.join(data_dir, f))[:, :, ::-1]
@@ -107,7 +110,9 @@ class Backdoor:
             x_poison = np.copy(x_clean)
             imgs_p = np.copy(x_clean[self.poison.get_indices_to_be_poisoned()])
             max_val = np.max(x_clean)
+            # inds_save = np.setdiff1d(np.arange(len(x_clean)), self.poison.get_indices_to_be_poisoned())
             imgs_to_be_poisoned = self.add_backdoor_on_imgs(imgs_p)
+            # x_poison = x_poison[inds_save]
             x_poison = np.append(x_poison, imgs_to_be_poisoned, axis=0)
         # label_p = np.copy(y_clean[self.poison.get_indices_to_be_poisoned()])
         y_poison = np.append(y_poison, np.ones((self.poison.get_num_poison())) * self.targets)
@@ -139,6 +144,9 @@ class Backdoor:
                     img = deprocess_vgg(img)
                     cv2.imwrite(os.path.join(data_dir, poison_f), img[:, :, ::-1])
                 imgs_to_be_poisoned.append(poison_f)
+
+            inds_save = np.setdiff1d(np.arange(len(x_clean)), poison.get_indices_to_be_poisoned())
+            x_poison = x_poison[inds_save]
             x_poison += imgs_to_be_poisoned
             y_poison = np.append(y_clean, np.ones(poison.get_num_poison()) * poison.get_targets(), axis=0)
             is_poison = np.append(is_poison, np.ones(poison.get_num_poison()))
@@ -157,8 +165,10 @@ class Backdoor:
             # we get poison from serialized model directly
 
             imgs_to_be_poisoned = np.copy(x_clean[poison.get_indices_to_be_poisoned()])
+            # inds_save = np.setdiff1d(np.arange(len(x_clean)), poison.get_indices_to_be_poisoned())
             imgs_to_be_poisoned = self.add_backdoor_on_imgs(imgs_to_be_poisoned)
             # label_p = np.copy(y_clean[self.poison.get_indices_to_be_poisoned()])
+            # x_poison = x_poison[inds_save]
             x_poison = np.append(x_poison, imgs_to_be_poisoned, axis=0)
             y_poison = np.append(y_poison, np.ones(poison.get_num_poison()) * poison.get_targets(), axis=0)
             is_poison = np.append(is_poison, np.ones(poison.get_num_poison()))

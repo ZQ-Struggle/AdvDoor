@@ -67,6 +67,8 @@ Meanwhile, we will try to detect the AdvDoor with Activation Clustering method [
 ![image](https://github.com/ZQ-Struggle/AdvDoor/blob/master/imgs/VGG2Res_CW.png)
 
 
+When adding a new dataset, pelase set up config json, dataloader and model. Besides, please change the `models_noLoad` and `models_load` item in `conf.py`.
+
 ### Reference
 
 <div id="activation_clustering"></div>
